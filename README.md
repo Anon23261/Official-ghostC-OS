@@ -96,4 +96,5 @@ Need help? Open an issue in our issue tracker!
 ---
 <div align="center">
 Made with ❤️ by the GhostC OS team
+ Couldn't have done without https://github.com/raspberrypi
 </div>
