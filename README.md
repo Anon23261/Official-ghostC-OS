@@ -96,5 +96,8 @@ Need help? Open an issue in our issue tracker!
 ---
 <div align="center">
 Made with ❤️ by the GhostC OS team
- Couldn't have done without https://github.com/raspberrypi
+
+Special thanks to:
+- [Raspberry Pi Foundation](https://github.com/raspberrypi) for their incredible work on bare metal programming resources and documentation
+- The open source community for their continuous support and contributions
 </div>
