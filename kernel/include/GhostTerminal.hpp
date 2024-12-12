@@ -7,9 +7,6 @@
 #include <map>
 #include <chrono>
 #include <unordered_map>
-#include <cmath>
-#include <sys/ioctl.h>
-#include <unistd.h>
 #include "RuneLogger.hpp"
 #include "RuneSystem.hpp"
 #include "RuneParser.hpp"
@@ -57,8 +54,6 @@ public:
     void initialize();
     void processCommand(const std::string& cmdLine);
     void shutdown();
-    void startBootSequence();
-    void displayPrompt();
     bool isRunning;
 
 private:
@@ -72,10 +67,9 @@ private:
     void showRunePower();
     void displayRunicBorder();
     void displayBanner();
+    void displayPrompt();
     void displayRitualStatus();
     void performBindingRitual(const std::string& primaryRune, const std::vector<std::string>& supportingRunes);
-    void initializeRuneEnvironment();
-    void clearScreen() { std::cout << "\033[2J\033[H"; }
     
     void registerCommand(const std::string& name, const std::string& runeSymbol = "",
                         const std::string& description = "", RuneCategory category = RuneCategory::SYSTEM,
@@ -85,11 +79,12 @@ private:
     void registerCommand(const std::string& name, 
                         std::function<void(const std::vector<std::string>&)> handler);
     
+    void openRuneEditor(const std::string& filename);
+    void processCommand(const std::string& input);
     std::vector<std::string> parseCommand(const std::string& cmdLine);
     bool isRuneCommand(const std::string& input);
     std::string getRuneSymbol(const std::string& command);
     bool validateRitual(const std::vector<std::string>& runes);
-    void openRuneEditor(const std::string& filename);
     
     std::unordered_map<std::string, RuneCommand> commands;
     std::unordered_map<std::string, std::string> runeAliases;

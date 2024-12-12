@@ -9,7 +9,13 @@ CMakeFiles/runelang.dir/src/GhostSystem.cpp.o
 CMakeFiles/runelang.dir/src/GhostTerminal.cpp.o
  ../include/GhostTerminal.hpp
  ../include/RuneLogger.hpp
+ ../include/RuneMonitor.hpp
+ ../include/RuneParser.hpp
+ ../include/RuneSystem.hpp
  /media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/src/GhostTerminal.cpp
+CMakeFiles/runelang.dir/src/RuneMonitor.cpp.o
+ ../include/RuneMonitor.hpp
+ /media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/src/RuneMonitor.cpp
 CMakeFiles/runelang.dir/src/RuneParser.cpp.o
  /media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/include/RuneParser.hpp
  /media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/include/RuneSystem.hpp

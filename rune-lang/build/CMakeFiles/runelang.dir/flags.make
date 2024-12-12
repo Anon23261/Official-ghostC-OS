@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -Drunelang_EXPORTS
 
-CXX_INCLUDES = -I"/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/include"
+CXX_INCLUDES = -I"/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/include" -I"/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/../kernel/include"
 
 CXX_FLAGS = -fPIC -Wall -Wextra -std=gnu++17
 

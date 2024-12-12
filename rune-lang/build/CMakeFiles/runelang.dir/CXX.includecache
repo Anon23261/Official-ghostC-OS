@@ -6,51 +6,29 @@
 
 #IncludeRegexTransform: 
 
-../include/GhostTerminal.hpp
+../include/RuneMonitor.hpp
 string
 -
 vector
 -
-functional
--
 memory
 -
-map
+atomic
 -
-RuneLogger.hpp
-../include/RuneLogger.hpp
-
-../include/RuneLogger.hpp
-string
--
-fstream
--
-sstream
+thread
 -
 mutex
 -
-iostream
--
-chrono
--
-ctime
--
-iomanip
+map
 -
 
-/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/src/GhostTerminal.cpp
-GhostTerminal.hpp
-/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/src/GhostTerminal.hpp
+/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/src/RuneMonitor.cpp
+RuneMonitor.hpp
+/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/src/RuneMonitor.hpp
 iostream
--
-sstream
 -
 thread
 -
 chrono
--
-cstdlib
--
-iomanip
 -
 

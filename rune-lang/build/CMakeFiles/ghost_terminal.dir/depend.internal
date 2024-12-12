@@ -4,4 +4,7 @@
 CMakeFiles/ghost_terminal.dir/src/ghost_terminal_main.cpp.o
  ../include/GhostTerminal.hpp
  ../include/RuneLogger.hpp
+ ../include/RuneMonitor.hpp
+ ../include/RuneParser.hpp
+ ../include/RuneSystem.hpp
  /media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/src/ghost_terminal_main.cpp

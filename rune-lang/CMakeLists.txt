@@ -13,9 +13,14 @@ add_library(runelang SHARED
     src/RuneSystem.cpp
     src/GhostSystem.cpp
     src/GhostTerminal.cpp
+    src/RuneMonitor.cpp
 )
 
-target_include_directories(runelang PUBLIC include)
+target_include_directories(runelang PUBLIC 
+    include
+    ${CMAKE_SOURCE_DIR}/../kernel/include
+)
+
 target_link_libraries(runelang PRIVATE Threads::Threads)
 
 # Add test executable
@@ -30,3 +35,15 @@ target_link_libraries(ghost_terminal runelang Threads::Threads)
 target_compile_options(runelang PRIVATE -Wall -Wextra)
 target_compile_options(rune_test PRIVATE -Wall -Wextra)
 target_compile_options(ghost_terminal PRIVATE -Wall -Wextra)
+
+# Install targets
+install(TARGETS runelang
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY include/
+    DESTINATION include/runelang
+    FILES_MATCHING PATTERN "*.hpp"
+)

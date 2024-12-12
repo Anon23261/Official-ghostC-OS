@@ -1,3 +1,7 @@
+/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles/install/strip.dir
+/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles/install.dir
+/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles/list_install_components.dir
+/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles/install/local.dir
 /media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles/rebuild_cache.dir
 /media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles/edit_cache.dir
 /media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles/ghost_terminal.dir

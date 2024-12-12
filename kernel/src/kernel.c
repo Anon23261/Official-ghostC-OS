@@ -2,21 +2,27 @@
 #include "../include/uart.h"
 #include "../include/timer.h"
 #include "../include/ghost_mini_uart.h"
+#include "../include/ghost_vga.h"
+#include "../include/ghost_terminal.h"
 
 // External assembly functions
 extern void enable_irq(void);
 extern void disable_irq(void);
 
+// Define some colors
+#define COLOR_BLACK   0x00000000
+#define COLOR_WHITE   0xFFFFFFFF
+#define COLOR_RED     0x00FF0000
+#define COLOR_GREEN   0x0000FF00
+#define COLOR_BLUE    0x000000FF
+
 void kernel_main(void) {
-    // Initialize UART for serial output
-    uart_init();
+    // Initialize hardware
+    hdmi_init();
+    term_init();
     
-    // Clear the screen (send terminal clear command)
-    uart_puts("\033[2J\033[H");
-    
-    // Display boot message with 5-minute delay simulation
-    uart_puts("GhostC OS Bootloader v1.0\n");
-    uart_puts("Starting boot sequence...\n\n");
+    // Display boot message
+    term_write_string("\033[32mGhostC OS Bootloader v1.0\033[0m\n\n");
     
     const char* boot_stages[] = {
         "Initializing ARM processor...",
@@ -33,64 +39,71 @@ void kernel_main(void) {
     
     int num_stages = sizeof(boot_stages) / sizeof(char*);
     
+    // Display boot progress
     for (int i = 0; i < num_stages; i++) {
         int percentage = (i * 100) / num_stages;
         
-        // Print progress
-        uart_puts("\r[");
+        // Clear line and show progress
+        term_write_string("\r\033[K"); // Clear line
+        term_write_string("\033[36m["); // Cyan
+        
+        // Draw progress bar
         for (int j = 0; j < 50; j++) {
             if (j < (percentage / 2)) {
-                uart_putc('=');
+                term_write_string("=");
             } else if (j == (percentage / 2)) {
-                uart_putc('>');
+                term_write_string(">");
             } else {
-                uart_putc(' ');
+                term_write_string(" ");
             }
         }
-        uart_puts("] ");
         
-        // Print percentage
-        if (percentage < 10) uart_putc(' ');
-        if (percentage < 100) uart_putc(' ');
-        uart_puts_int(percentage);
-        uart_puts("% ");
-        uart_puts(boot_stages[i]);
-        uart_puts("\n");
+        term_write_string("] ");
         
-        // Delay for about 30 seconds per stage
-        for (int j = 0; j < 30; j++) {
-            timer_sleep(1000); // Sleep for 1 second
-        }
+        // Print percentage and stage
+        char percent_str[8];
+        sprintf(percent_str, "%3d%%", percentage);
+        term_write_string(percent_str);
+        term_write_string(" ");
+        term_write_string("\033[0m"); // Reset color
+        term_write_string(boot_stages[i]);
+        
+        // Debug output
+        term_debug_print(boot_stages[i]);
+        term_debug_print("\n");
+        
+        // Delay for visual effect
+        timer_wait(100);
     }
     
-    // Clear screen again
-    uart_puts("\033[2J\033[H");
+    // Boot complete
+    term_write_string("\n\n\033[32m"); // Green text
+    term_write_string("   ▄██████▄     ▄█    █▄     ▄██████▄     ▄████████     ███      ▄████████ \n");
+    term_write_string("  ███    ███   ███    ███   ███    ███   ███    ███ ▀█████████▄ ███    ███ \n");
+    term_write_string("  ███    █▀    ███    ███   ███    ███   ███    █▀     ▀███▀▀██ ███    █▀  \n");
+    term_write_string(" ▄███         ▄███▄▄▄▄███▄▄ ███    ███   ███            ███   ▀ ███        \n");
+    term_write_string("▀▀███ ████▄  ▀▀███▀▀▀▀███▀  ███    ███ ▀███████████     ███     ███        \n");
+    term_write_string("  ███    ███   ███    ███   ███    ███          ███     ███     ███    █▄  \n");
+    term_write_string("  ███    ███   ███    ███   ███    ███    ▄█    ███     ███     ███    ███ \n");
+    term_write_string("  ████████▀    ███    █▀     ▀██████▀   ▄████████▀     ▄████▀   ████████▀  \n");
     
-    // Display ASCII art logo
-    uart_puts("\033[32m"); // Green text
-    uart_puts("   ▄██████▄     ▄█    █▄     ▄██████▄     ▄████████     ███      ▄████████ \n");
-    uart_puts("  ███    ███   ███    ███   ███    ███   ███    ███ ▀█████████▄ ███    ███ \n");
-    uart_puts("  ███    █▀    ███    ███   ███    ███   ███    █▀     ▀███▀▀██ ███    █▀  \n");
-    uart_puts(" ▄███         ▄███▄▄▄▄███▄▄ ███    ███   ███            ███   ▀ ███        \n");
-    uart_puts("▀▀███ ████▄  ▀▀███▀▀▀▀███▀  ███    ███ ▀███████████     ███     ███        \n");
-    uart_puts("  ███    ███   ███    ███   ███    ███          ███     ███     ███    █▄  \n");
-    uart_puts("  ███    ███   ███    ███   ███    ███    ▄█    ███     ███     ███    ███ \n");
-    uart_puts("  ████████▀    ███    █▀     ▀██████▀   ▄████████▀     ▄████▀   ████████▀  \n");
+    term_write_string("\033[36m"); // Cyan text
+    term_write_string("\n                          by: GHOST Sec\n");
+    term_write_string("\033[0m"); // Reset text color
     
-    uart_puts("\033[36m"); // Cyan text
-    uart_puts("\n                          by: GHOST Sec\n");
-    uart_puts("\033[0m"); // Reset text color
+    term_write_string("\nGhostC OS initialized successfully.\n");
+    term_write_string("Type 'help' for available commands.\n\n");
     
-    uart_puts("\nGhostC OS initialized successfully.\n");
-    uart_puts("Type 'help' for available commands.\n\n");
+    // Show cursor
+    term_show_cursor(true);
     
     // Initialize system components
     timer_init();
     enable_irq();
     
-    // Start command shell
-    while (1) {
-        uart_puts("ghost@ghostc:~$ ");
-        process_command();
+    // Enter kernel loop
+    while(1) {
+        // Kernel main loop
+        // TODO: Add command processing
     }
 }

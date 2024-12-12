@@ -45,30 +45,38 @@ void testMemoryManagement() {
 }
 
 void testMonitoring() {
-    RuneMonitor& monitor = RuneMonitor::getInstance();
+    RuneMonitor monitor;
     
-    // Register a test metric
-    monitor.registerMetric("test_metric", []() { return 42.0; });
+    // Initialize the monitor
+    monitor.initialize();
     
-    // Start monitoring
-    monitor.startMonitoring(std::chrono::milliseconds(100));
+    // Test basic protection features
+    monitor.startProtection();
+    assert(monitor.isShieldActive() == true);
     
-    // Wait a bit for some metrics to be collected
+    monitor.enableBarrier();
+    assert(monitor.isWardActive() == true);
+    
+    // Test system analysis
+    monitor.startSystemAnalysis();
+    assert(monitor.isAnalysisRunning() == true);
+    
+    // Wait a bit for analysis to run
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
     
-    // Check the metric value
-    assert(monitor.getMetric("test_metric") == 42.0);
+    // Get status information
+    auto vulnerabilities = monitor.getSystemVulnerabilities();
+    auto networkStatus = monitor.getNetworkStatus();
     
-    // Stop monitoring
-    monitor.stopMonitoring();
-    
-    // Unregister the metric
-    monitor.unregisterMetric("test_metric");
+    // Stop everything
+    monitor.stopProtection();
+    assert(monitor.isShieldActive() == false);
+    assert(monitor.isWardActive() == false);
 }
 
 void testErrorHandling() {
     try {
-        RUNE_THROW(RuneError::ErrorCode::SYSTEM_ERROR, "Test error");
+        throw RuneError(RuneError::ErrorCode::SYSTEM_ERROR, "Test error");
         assert(false && "Should not reach here");
     } catch (const RuneError& e) {
         assert(e.getCode() == RuneError::ErrorCode::SYSTEM_ERROR);
@@ -110,10 +118,10 @@ int main() {
         testLogging();
         std::cout << "Logging test passed" << std::endl;
 
-        std::cout << "All tests passed!" << std::endl;
+        std::cout << "\nAll tests passed successfully!" << std::endl;
         return 0;
     } catch (const std::exception& e) {
-        LOG_CRITICAL("Test failed: ", e.what());
+        std::cerr << "Test failed with error: " << e.what() << std::endl;
         return 1;
     }
 }

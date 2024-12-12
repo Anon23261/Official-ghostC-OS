@@ -75,6 +75,52 @@ CMAKE_BINARY_DIR = "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -222,6 +268,33 @@ src/GhostTerminal.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/runelang.dir/build.make CMakeFiles/runelang.dir/src/GhostTerminal.cpp.s
 .PHONY : src/GhostTerminal.cpp.s
 
+src/RuneMonitor.o: src/RuneMonitor.cpp.o
+
+.PHONY : src/RuneMonitor.o
+
+# target to build an object file
+src/RuneMonitor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runelang.dir/build.make CMakeFiles/runelang.dir/src/RuneMonitor.cpp.o
+.PHONY : src/RuneMonitor.cpp.o
+
+src/RuneMonitor.i: src/RuneMonitor.cpp.i
+
+.PHONY : src/RuneMonitor.i
+
+# target to preprocess a source file
+src/RuneMonitor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runelang.dir/build.make CMakeFiles/runelang.dir/src/RuneMonitor.cpp.i
+.PHONY : src/RuneMonitor.cpp.i
+
+src/RuneMonitor.s: src/RuneMonitor.cpp.s
+
+.PHONY : src/RuneMonitor.s
+
+# target to generate assembly for a file
+src/RuneMonitor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runelang.dir/build.make CMakeFiles/runelang.dir/src/RuneMonitor.cpp.s
+.PHONY : src/RuneMonitor.cpp.s
+
 src/RuneParser.o: src/RuneParser.cpp.o
 
 .PHONY : src/RuneParser.o
@@ -337,6 +410,10 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... ghost_terminal"
 	@echo "... rune_test"
@@ -347,6 +424,9 @@ help:
 	@echo "... src/GhostTerminal.o"
 	@echo "... src/GhostTerminal.i"
 	@echo "... src/GhostTerminal.s"
+	@echo "... src/RuneMonitor.o"
+	@echo "... src/RuneMonitor.i"
+	@echo "... src/RuneMonitor.s"
 	@echo "... src/RuneParser.o"
 	@echo "... src/RuneParser.i"
 	@echo "... src/RuneParser.s"

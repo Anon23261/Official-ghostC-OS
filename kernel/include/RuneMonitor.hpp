@@ -13,10 +13,7 @@ namespace RuneLang {
 class RuneMonitor {
 public:
     RuneMonitor();
-    ~RuneMonitor();
-
-    // Initialization
-    void initialize();
+    virtual ~RuneMonitor();
 
     // Basic Protection
     void startProtection();
@@ -35,9 +32,9 @@ public:
     void registerBoundRunes(const std::string& primary, const std::vector<std::string>& supporting);
     
     // Status Checks
-    bool isShieldActive() const;
-    bool isWardActive() const;
-    bool isAnalysisRunning() const;
+    bool isShieldActive() const { return shieldActive; }
+    bool isWardActive() const { return wardActive; }
+    bool isAnalysisRunning() const { return analysisRunning; }
     
     std::vector<std::string> getSystemVulnerabilities() const;
     std::vector<std::string> getNetworkStatus() const;

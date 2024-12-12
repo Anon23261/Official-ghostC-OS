@@ -102,7 +102,7 @@ CMakeFiles/ghost_terminal.dir/all: CMakeFiles/runelang.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ghost_terminal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 7
+	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ghost_terminal.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 0
 .PHONY : CMakeFiles/ghost_terminal.dir/rule
@@ -129,7 +129,7 @@ CMakeFiles/rune_test.dir/all: CMakeFiles/runelang.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/rune_test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 7
+	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/rune_test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 0
 .PHONY : CMakeFiles/rune_test.dir/rule
@@ -151,12 +151,12 @@ CMakeFiles/rune_test.dir/clean:
 CMakeFiles/runelang.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/runelang.dir/build.make CMakeFiles/runelang.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/runelang.dir/build.make CMakeFiles/runelang.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" --progress-num=5,6,7,8,9 "Built target runelang"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" --progress-num=5,6,7,8,9,10 "Built target runelang"
 .PHONY : CMakeFiles/runelang.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/runelang.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 5
+	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/runelang.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/media/ghost/0F17-1D0C/ghost Sec/Rune-Editor/rune-lang/build/CMakeFiles" 0
 .PHONY : CMakeFiles/runelang.dir/rule

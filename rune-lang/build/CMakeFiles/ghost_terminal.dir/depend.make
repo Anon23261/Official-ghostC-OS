@@ -3,5 +3,8 @@
 
 CMakeFiles/ghost_terminal.dir/src/ghost_terminal_main.cpp.o: ../include/GhostTerminal.hpp
 CMakeFiles/ghost_terminal.dir/src/ghost_terminal_main.cpp.o: ../include/RuneLogger.hpp
+CMakeFiles/ghost_terminal.dir/src/ghost_terminal_main.cpp.o: ../include/RuneMonitor.hpp
+CMakeFiles/ghost_terminal.dir/src/ghost_terminal_main.cpp.o: ../include/RuneParser.hpp
+CMakeFiles/ghost_terminal.dir/src/ghost_terminal_main.cpp.o: ../include/RuneSystem.hpp
 CMakeFiles/ghost_terminal.dir/src/ghost_terminal_main.cpp.o: ../src/ghost_terminal_main.cpp
 
