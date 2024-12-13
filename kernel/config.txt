@@ -1,10 +1,35 @@
-# Raspberry Pi Zero W configuration
-kernel=kernel.img
-arm_control=0x200
-disable_commandline_tags=1
-disable_overscan=1
-uart_2ndstage=1
+# GhostC OS Configuration
+# Raspberry Pi Boot Configuration
 
-# Force UART as primary console
+# Enable UART for debugging
 enable_uart=1
-core_freq=250
+
+# GPU Memory (MB)
+gpu_mem=128
+
+# Display Settings
+hdmi_force_hotplug=1
+hdmi_group=1
+hdmi_mode=16  # 1080p 60Hz
+
+# Overclock Settings (optional, comment out if not needed)
+#arm_freq=1400
+#over_voltage=4
+
+# Boot Settings
+kernel=kernel.img
+boot_delay=0
+
+# Enable USB support
+max_usb_current=1
+usb_max_current_enable=1
+
+# Audio Settings
+dtparam=audio=on
+
+# Enable I2C and SPI (if needed)
+#dtparam=i2c_arm=on
+#dtparam=spi=on
+
+# Enable GPIO
+gpio=on
