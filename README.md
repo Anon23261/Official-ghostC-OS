@@ -89,13 +89,85 @@ The Rune Editor is built with security at its core:
 - 🔑 Encrypted file operations
 - 📝 Comprehensive logging
 
+## GhostC Language Support
+
+GhostC is now integrated into the kernel, providing a lightweight scripting language for system automation and customization. Key features include:
+
+- Basic type system (int, float, string, bool, array, struct)
+- Built-in functions for I/O operations
+- Stack-based execution model
+- Heap memory management
+- Symbol table for variable storage
+
+### Using GhostC
+
+To use GhostC in your programs:
+
+1. Include the GhostC header:
+```c
+#include <ghostc.h>
+```
+
+2. Initialize the runtime:
+```c
+GhostCRuntime* runtime = ghostc_init(1024, 4096);  // Stack size: 1024, Heap size: 4096
+```
+
+3. Execute GhostC code:
+```c
+const char* source = "print('Hello from GhostC!')";
+GhostCCompiler compiler = {0};
+ghostc_compile(source, &compiler);
+ghostc_execute(runtime, compiler.bytecode, compiler.bytecode_size);
+```
+
+4. Clean up:
+```c
+ghostc_cleanup(runtime);
+```
+
+## Hardware Compatibility
+
+### Raspberry Pi Zero W
+The GhostC OS is optimized for the Raspberry Pi Zero W with the following specifications:
+- 1GHz single-core CPU
+- 512MB RAM
+- Built-in WiFi and Bluetooth
+- Mini HDMI port
+- Micro USB ports
+
+#### Zero W Specific Setup
+1. Use a good quality power supply (5V 2.5A recommended)
+2. Connect via mini HDMI (requires mini HDMI to HDMI adapter)
+3. For keyboard, use a micro USB OTG adapter
+4. WiFi is enabled but Bluetooth is disabled by default to save resources
+
+#### Performance Optimizations for Zero W
+- Display resolution set to 640x480 for better performance
+- GPU memory limited to 32MB
+- Bluetooth disabled by default
+- Audio disabled by default
+- USB power consumption optimized
+- Initial CPU turbo boost enabled for 30 seconds at boot
+
+### Other Raspberry Pi Models
+For other Raspberry Pi models (3B+, 4, etc.), edit `kernel/config.txt` and uncomment the following lines:
+```bash
+#hdmi_mode=16  # 1080p 60Hz
+#gpu_mem=128
+#dtparam=audio=on
+#max_usb_current=1
+```
+
 ## SD Card Preparation and Booting
 
 ### Prerequisites
 - A micro SD card (minimum 4GB recommended)
 - SD card reader
-- Raspberry Pi (tested on Raspberry Pi 3B+ and 4)
-- Root/sudo access on your Linux system
+- For Zero W:
+  - Mini HDMI to HDMI adapter
+  - Micro USB OTG adapter for keyboard
+  - 5V 2.5A power supply
 
 ### Building the OS
 1. First, build the kernel:

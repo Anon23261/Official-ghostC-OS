@@ -1,35 +1,61 @@
 # GhostC OS Configuration
-# Raspberry Pi Boot Configuration
+# Raspberry Pi Zero W Configuration
 
-# Enable UART for debugging
-enable_uart=1
-
-# GPU Memory (MB)
-gpu_mem=128
-
-# Display Settings
-hdmi_force_hotplug=1
-hdmi_group=1
-hdmi_mode=16  # 1080p 60Hz
-
-# Overclock Settings (optional, comment out if not needed)
-#arm_freq=1400
-#over_voltage=4
+# Essential Zero W Settings
+arm_control=0x200
+arm_64bit=0
+disable_commandline_tags=1
+disable_overscan=1
 
 # Boot Settings
 kernel=kernel.img
 boot_delay=0
+disable_splash=1
+avoid_warnings=1
 
-# Enable USB support
-max_usb_current=1
-usb_max_current_enable=1
+# Enable UART for debugging
+enable_uart=1
+init_uart_clock=16000000
+uart_2ndstage=1
+core_freq=250
 
-# Audio Settings
-dtparam=audio=on
+# CPU settings
+arm_freq=1000
+over_voltage=0
+temp_limit=85
 
-# Enable I2C and SPI (if needed)
-#dtparam=i2c_arm=on
-#dtparam=spi=on
+# Memory Split (GPU/CPU)
+gpu_mem=32
+gpu_mem_256=32
+gpu_mem_512=32
+gpu_mem_1024=32
 
-# Enable GPIO
+# Display Settings
+hdmi_force_hotplug=1
+hdmi_drive=2
+hdmi_group=2
+hdmi_mode=4  # 640x480 60Hz - better for Zero W's limited resources
+hdmi_cvt=800 600 60 3
+max_framebuffers=1
+
+# Power Management
+initial_turbo=30
+
+# Wireless Settings (Zero W specific)
+dtoverlay=disable-bt    # Disable Bluetooth to save resources
+dtoverlay=miniuart-bt   # Use mini UART for Bluetooth
+dtparam=audio=off       # Disable audio for better performance
+
+# Enable WiFi
+dtoverlay=disable-wifi
+
+# USB Settings (reduce power consumption)
+max_usb_current=0
+usb_max_current_enable=0
+
+# GPIO Settings
 gpio=on
+dtoverlay=w1-gpio      # Enable 1-wire interface if needed
+
+# Enable GhostC
+dtparam=ghostc=on
