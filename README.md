@@ -89,6 +89,54 @@ The Rune Editor is built with security at its core:
 - 🔑 Encrypted file operations
 - 📝 Comprehensive logging
 
+## SD Card Preparation and Booting
+
+### Prerequisites
+- A micro SD card (minimum 4GB recommended)
+- SD card reader
+- Raspberry Pi (tested on Raspberry Pi 3B+ and 4)
+- Root/sudo access on your Linux system
+
+### Building the OS
+1. First, build the kernel:
+```bash
+cd kernel
+./build-os.sh
+```
+
+### Preparing the SD Card
+1. Insert your SD card into your computer
+2. Identify your SD card device (you can use `lsblk` command)
+3. Run the preparation script as root:
+```bash
+sudo ./prepare-sd.sh /dev/sdX  # Replace X with your SD card device letter
+```
+
+⚠️ **WARNING**: Be very careful with the device name. Using the wrong device could erase your system drive!
+
+### Booting GhostC OS
+1. Insert the prepared SD card into your Raspberry Pi
+2. Connect a monitor via HDMI
+3. Connect a USB keyboard
+4. Power on the Raspberry Pi
+
+The GhostC OS will boot automatically and you'll see the GhostTerminal interface.
+
+### Default Configuration
+The default `config.txt` settings are optimized for:
+- HDMI output at 1080p
+- USB keyboard support
+- Basic GPIO functionality
+
+You can modify these settings by editing the `config.txt` file before running the preparation script.
+
+### Troubleshooting
+If you encounter boot issues:
+1. Ensure the SD card is properly formatted
+2. Verify all files were copied correctly
+3. Check your power supply is adequate (recommended: 5V 2.5A)
+4. Ensure your HDMI cable is connected before powering on
+
 ## 💬 Support
 
 Need help? Open an issue in our issue tracker!
