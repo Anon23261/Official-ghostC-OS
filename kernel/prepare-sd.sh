@@ -1,58 +1,60 @@
 #!/bin/bash
 
-# Check if running as root
-if [ "$EUID" -ne 0 ]; then 
-    echo "Please run as root"
+set -e
+
+KERNEL_IMG="$1"
+SD_IMG="$2"
+BOOT_SIZE=64  # Size in MB
+ROOT_SIZE=256 # Size in MB
+
+if [ -z "$KERNEL_IMG" ] || [ -z "$SD_IMG" ]; then
+    echo "Usage: $0 <kernel.img> <sd.img>"
     exit 1
 fi
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 /dev/sdX (replace X with your SD card device letter)"
-    exit 1
-fi
+echo "Creating SD card image for Raspberry Pi Zero W..."
 
-DEVICE=$1
-BUILD_DIR="build"
-MOUNT_POINT="/mnt/ghostc_boot"
+# Calculate total size
+TOTAL_SIZE=$((BOOT_SIZE + ROOT_SIZE))
 
-# Verify device exists
-if [ ! -b "$DEVICE" ]; then
-    echo "Error: Device $DEVICE does not exist"
-    exit 1
-fi
+# Create empty image
+dd if=/dev/zero of="$SD_IMG" bs=1M count=$TOTAL_SIZE
 
-echo "WARNING: This will erase all data on $DEVICE"
-read -p "Are you sure you want to continue? (y/n) " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    exit 1
-fi
+# Set up loop device
+LOOP_DEV=$(sudo losetup -f)
+sudo losetup "$LOOP_DEV" "$SD_IMG"
 
-# Create partitions
-echo "Creating partitions..."
-parted -s "$DEVICE" mklabel msdos
-parted -s "$DEVICE" mkpart primary fat32 1MiB 100%
-parted -s "$DEVICE" set 1 boot on
+# Create partition table
+sudo parted -s "$LOOP_DEV" mklabel msdos
+sudo parted -s "$LOOP_DEV" mkpart primary fat32 1MiB ${BOOT_SIZE}MiB
+sudo parted -s "$LOOP_DEV" mkpart primary ext4 ${BOOT_SIZE}MiB 100%
+sudo parted -s "$LOOP_DEV" set 1 boot on
 
-# Format boot partition
-echo "Formatting boot partition..."
-mkfs.vfat -F 32 "${DEVICE}1"
+# Set up partitions
+sudo kpartx -av "$LOOP_DEV"
+LOOP_NAME=$(basename "$LOOP_DEV")
+BOOT_PART="/dev/mapper/${LOOP_NAME}p1"
+ROOT_PART="/dev/mapper/${LOOP_NAME}p2"
 
-# Create mount point
-mkdir -p "$MOUNT_POINT"
+# Format partitions
+sudo mkfs.vfat -F 32 -n "BOOT" "$BOOT_PART"
+sudo mkfs.ext4 -L "ROOT" "$ROOT_PART"
 
-# Mount boot partition
-mount "${DEVICE}1" "$MOUNT_POINT"
+# Mount partitions
+MOUNT_DIR=$(mktemp -d)
+sudo mount "$BOOT_PART" "$MOUNT_DIR"
 
-# Copy kernel and boot files
+# Copy boot files
 echo "Copying boot files..."
-cp "$BUILD_DIR/kernel.img" "$MOUNT_POINT/"
-cp config.txt "$MOUNT_POINT/"
-cp boot.asm "$MOUNT_POINT/"
+sudo cp "$KERNEL_IMG" "$MOUNT_DIR/kernel.img"
+sudo cp config.txt "$MOUNT_DIR/"
+sudo cp cmdline.txt "$MOUNT_DIR/" 2>/dev/null || echo "cmdline.txt not found, skipping..."
 
-# Sync and unmount
-sync
-umount "$MOUNT_POINT"
+# Unmount and clean up
+sudo umount "$MOUNT_DIR"
+sudo rmdir "$MOUNT_DIR"
+sudo kpartx -d "$LOOP_DEV"
+sudo losetup -d "$LOOP_DEV"
 
-echo "SD card preparation complete!"
-echo "You can now insert the SD card into your Raspberry Pi and boot GhostC OS"
+echo "SD card image created successfully: $SD_IMG"
+echo "Write this image to your SD card using 'dd' or your preferred imaging tool"
